@@ -153,6 +153,7 @@ resource "aws_ecs_capacity_provider" "this" {
     auto_scaling_group_arn = each.value.auto_scaling_group_arn
     # When you use managed termination protection, you must also use managed scaling otherwise managed termination protection won't work
     managed_termination_protection = length(try([each.value.managed_scaling], [])) == 0 ? "DISABLED" : try(each.value.managed_termination_protection, null)
+    managed_draining = try(each.value.managed_draining, null)
 
     dynamic "managed_scaling" {
       for_each = try([each.value.managed_scaling], [])
